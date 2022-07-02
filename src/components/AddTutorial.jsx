@@ -1,11 +1,13 @@
 import { useState } from "react";
 
-const AddTutorial = () => {
+const AddTutorial = ({addTutorial}) => { //!destruction
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
   const handleSubmit = (e) => {
 
+    e.preventDefault();//! sayfa refleshını kapattık.
+    addTutorial({title:title, description: desc})
   };
 
   return (
