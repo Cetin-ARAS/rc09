@@ -8,6 +8,7 @@ const Home = () => {
 
   const url = "https://cw-axios-example.herokuapp.com/api/tutorials";
 
+  //! GET (Read) 👇
   //? Fetching data from API with try-catch 👇
   const getTutorials = async () => {
     try {
@@ -25,16 +26,48 @@ const Home = () => {
   }, []);
 
   console.log(tutorials);
-//! POST (CREATE)
-  const addTutorial = (tutorial) => {
 
-    console.log('add');
-  }
+  //! POST (Create)
+  const addTutorial = async (tutorial) => {
+    try {
+      await axios.post(url, tutorial);
+    } catch (error) {
+      console.log(error);
+    }
+    //! After sending the data to the API with submit, we are calling the data from the API again with getTutorials() function. So final datas will appear on the page without refreshing  👇
+    getTutorials();
+  };
 
+  //! DELETE 👇
+  const deleteTutorial = async (id) => {
+    try {
+      await axios.delete(`${url}/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+    getTutorials();
+  };
+
+  //! UPDATE (PUT: Whole Update, PATCH : Partially Update)
+  const editTutorial = async (id, title, desc) => {
+  const filtered = tutorials.filter((tutor) => tutor.id === id).
+  map(()=> ({title: title, description: desc}));
+
+    // try {
+    //   await axios.put(`${url}/${id}`);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    getTutorials();
+  };
   return (
     <>
       <AddTutorial addTutorial={addTutorial} />
-      <TutorialList tutorials={tutorials} /> //! spread
+      <TutorialList
+        tutorials={tutorials}
+        deleteTutorial={deleteTutorial}
+        editTutorial={editTutorial}
+      />
     </>
   );
 };

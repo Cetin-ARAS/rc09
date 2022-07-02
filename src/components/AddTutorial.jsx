@@ -7,7 +7,9 @@ const AddTutorial = ({addTutorial}) => { //!destruction
   const handleSubmit = (e) => {
 
     e.preventDefault();//! sayfa refleshını kapattık.
-    addTutorial({title:title, description: desc})
+    addTutorial({title:title, description: desc});
+    setTitle("");
+    setDesc("");
   };
 
   return (
